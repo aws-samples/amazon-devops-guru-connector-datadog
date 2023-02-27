@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  DataDogFunctions
+
+  Sample SAM Template for DataDogFunctions
+
+Globals:
+  Function:
+    Timeout: 20
+
+Metadata:
+    AWS::ServerlessRepo::Application:
+        Name: DevOps-DataDog-Connector
+        Description: DataDog Integration
+        Author: DevOpsGuru
+        SpdxLicenseId: Apache-2.0
+        LicenseUrl: ./LICENSE.txt
+        ReadmeUrl: ./README.md
+        Labels: [ 'DevOps-Guru', 'Datadog' ]
+        HomePageUrl: https://code.amazon.com/packages/DevOpsGuruDataDogConnector
+        SemanticVersion: 0.0.2
+        SourceCodeUrl: https://code.amazon.com/packages/DevOpsGuruDataDogConnector/trees/mainline
+
+Resources:
+  Functions:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: Functions
+      Handler: aws.devopsguru.partner.datadog.App::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          DD_API_KEY: 68811ee9720d1b2f450ddd32eb4b35e8
+          DD_APP_KEY: 949f4ce2776d6a46f87971f013134d9ba76e17d2
+          DD_SITE: datadoghq.com
