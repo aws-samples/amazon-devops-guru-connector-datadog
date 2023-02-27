@@ -1,0 +1,17 @@
+.gradle/
+.idea/
+/build
+/buildSrc/build/
+/gradle/
+/gradlew
+/gradlew.bat
+/wrapper/
+/.metadata/
+.project
+*.class
+*.jar
+*.prefs
+*.lst
+*/target/*
+*/.aws-sam/*
+
