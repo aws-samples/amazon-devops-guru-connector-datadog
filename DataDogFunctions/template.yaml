@@ -32,6 +32,4 @@ Resources:
       MemorySize: 512
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
-          DD_API_KEY: ***REMOVED***
-          DD_APP_KEY: ***REMOVED***
-          DD_SITE: datadoghq.com
+          SECRET_NAME: DataDogSecretManager
