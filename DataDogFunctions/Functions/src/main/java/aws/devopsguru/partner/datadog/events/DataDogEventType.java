@@ -71,7 +71,8 @@ public class DataDogEventType {
 							+ input.get("detail").get("recommendations").get(0).get("relatedAnomalies").get(0)
 									.get("sourceDetails").get("cloudWatchMetrics").get(0).get("namespace").toString()
 							+ "]");
-		} else if (input.get("detail").get("messageType").toString().replace("\"", "").equalsIgnoreCase("SEVERITY_UPGRADED")) {
+		} else if (input.get("detail").get("messageType").toString().replace("\"", "")
+				.equalsIgnoreCase("SEVERITY_UPGRADED")) {
 			textDetail = new HashMap<>();
 			textDetail.put("eventType", input.get("detail").get("messageType").toString());
 			textDetail.put("insightId", input.get("detail").get("insightId").toString());
@@ -82,7 +83,8 @@ public class DataDogEventType {
 		if (input.get("detail").has("anomalies")) {
 			input.get("detail").get("insightUrl").toString();
 		}
-		if (!input.get("detail").get("messageType").toString().replace("\"", "").equalsIgnoreCase("SEVERITY_UPGRADED")) {
+		if (!input.get("detail").get("messageType").toString().replace("\"", "")
+				.equalsIgnoreCase("SEVERITY_UPGRADED")) {
 			eventCreateRequestBody = new EventCreateRequest()
 					/*
 					 * Title attribute of DataDog is mapped with detail-type attribute of DevOps
@@ -192,7 +194,7 @@ public class DataDogEventType {
 			return defaultApiClient;
 		}
 
-		JSONObject serviceNowCredentials = getSecret("DataDogSecretManager", context);
+		JSONObject serviceNowCredentials = getSecret(System.getenv("SECRET_NAME"), context);
 		try {
 			apiKey = serviceNowCredentials.getString("DD_API_KEY");
 			appKey = serviceNowCredentials.getString("DD_APP_KEY");
