@@ -1,4 +1,4 @@
-# OpsGenieServerlessTemplate
+# DataDogServerlessTemplate
 
 DESCRIPTION: 
   SAM app integration for creating DataDog Eventss when DevOpsGuru creates an Insight
