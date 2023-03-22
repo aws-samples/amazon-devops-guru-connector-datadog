@@ -4,8 +4,10 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -83,6 +85,10 @@ public class DataDogEventType {
 		if (input.get("detail").has("anomalies")) {
 			input.get("detail").get("insightUrl").toString();
 		}
+		
+		List<String> list = extractTags(textDetail);
+		
+		
 		if (!input.get("detail").get("messageType").toString().replace("\"", "")
 				.equalsIgnoreCase("SEVERITY_UPGRADED")) {
 			eventCreateRequestBody = new EventCreateRequest()
@@ -100,7 +106,8 @@ public class DataDogEventType {
 					 * Tags attribute of DataDog is mapped with messageType attribute of DevOps Guru
 					 * Insight
 					 */
-					.tags(Collections.singletonList(input.get("detail").get("messageType").toString()))
+					//.tags(Collections.singletonList(input.get("detail").get("messageType").toString()))
+					.tags(list)
 					/*
 					 * Aggregation Key attribute of DataDog is mapped with accountId attribute of
 					 * DevOps Guru Insight
@@ -143,7 +150,7 @@ public class DataDogEventType {
 					 * Tags attribute of DataDog is mapped with messageType attribute of DevOps Guru
 					 * Insight
 					 */
-					.tags(Collections.singletonList(input.get("detail").get("messageType").toString()))
+					.tags(list)
 					/*
 					 * Aggregation Key attribute of DataDog is mapped with accountId attribute of
 					 * DevOps Guru Insight
@@ -175,6 +182,25 @@ public class DataDogEventType {
 			Constants.getLogger().error("Reason: " + e.getResponseBody());
 			Constants.getLogger().error("Response headers: " + e.getResponseHeaders());
 		}
+	}
+
+	private static List<String> extractTags(Map<String, String> textDetail) {
+		
+		String tagText = null;
+		
+		// Iterating HashMap and extract tags
+        for (Map.Entry<String, String> set :
+        	textDetail.entrySet()) {
+        	if(tagText == null)
+        		tagText=" \""+ (set.getKey().trim() + ":" + set.getValue().replaceAll("\""," ").trim())+"\",";
+        	else	
+        		tagText=tagText+ " \""+ (set.getKey().trim() + ":" + set.getValue().replaceAll("\""," ").trim())+"\",";
+
+        }
+        	String[] strSplit= tagText.split(",");
+			List<String> listOfTags = new ArrayList<String>(Arrays.asList(strSplit));	
+
+		return listOfTags;
 	}
 
 	public static String unixTimeStampToISOConverter(String unixTimeStampInput) {
