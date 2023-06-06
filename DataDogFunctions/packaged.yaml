@@ -32,8 +32,8 @@ Resources:
       MemorySize: 512
       Environment:
         Variables:
-          DD_API_KEY: ***REMOVED***
-          DD_APP_KEY: ***REMOVED***
+          DD_API_KEY: **REMOVED**
+          DD_APP_KEY: **REMOVED**
           DD_SITE: datadoghq.com
     Metadata:
       SamResourceId: Functions
